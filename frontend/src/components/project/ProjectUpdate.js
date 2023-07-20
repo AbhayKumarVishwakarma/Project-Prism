@@ -18,7 +18,7 @@ const ProjectUpdate = () => {
         try {
             const response = await fetch(`http://127.0.0.1:5000/project/${projectId}`);
             const data = await response.json();
-            console.log(data);
+            // console.log(data);
             setFormData(data)
         }
         catch (error) {
@@ -66,7 +66,7 @@ const ProjectUpdate = () => {
                 <label> End Date: <input type="text" name="end_date" value={formData.end_date} onChange={handleInputChange} /> </label>
                 <label> Manager ID: <input type="number" name="manager_id" value={formData.manager_id} onChange={handleInputChange} /> </label>
 
-                <button type="submit">Update Portfolio Manager</button>
+                <button type="submit">Update Project</button>
             </form>
         </div>
     );

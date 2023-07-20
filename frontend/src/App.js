@@ -5,13 +5,17 @@ import { Link } from 'react-router-dom';
 import PortfolioManagerView from './components/manager/PortfolioManagerView';
 import PortfolioManagerAdd from './components/manager/PortfolioManagerAdd';
 import PortfolioManagerUpdate from './components/manager/PortfolioManagerUpdate';
+
 import ProjectView from './components/project/ProjectView';
 import ProjectAdd from './components/project/ProjectAdd';
 import ProjectUpdate from './components/project/ProjectUpdate';
-import ResourceView from './components/resource/ResourceView';
+
+import ResourceViewAll from './components/resource/ResourceViewAll';
+import ResourceViewByTask from './components/resource/ResourceViewByTask';
 import ResourceAdd from './components/resource/ResourceAdd';
 import ResourceUpdate from './components/resource/ResourceUpdate';
-import TaskView from './components/task/TaskView';
+
+import TaskViewByProject from './components/task/TaskViewByProject';
 import TaskAdd from './components/task/TaskAdd';
 import TaskUpdate from './components/task/TaskUpdate';
 
@@ -43,13 +47,14 @@ function App() {
           <Route exact path='/update-project/:projectId' element={<ProjectUpdate />} />
 
           {/* Task */}
-          <Route exact path='/view-task/:projectId' element={<TaskView />} />
-          <Route exact path='/add-task' element={<TaskAdd />} />
+          <Route exact path='/view-task/:projectId' element={<TaskViewByProject />} />
+          <Route exact path='/add-task/:projectId' element={<TaskAdd />} />
           <Route exact path='/update-task/:taskId' element={<TaskUpdate />} />
 
           {/* Resource */}
-          <Route exact path='/view-resources' element={<ResourceView />} />
-          <Route exact path='/add-resource' element={<ResourceAdd />} />
+          <Route exact path='/view-resources' element={<ResourceViewAll />} />
+          <Route exact path='/view-resource/:taskId' element={<ResourceViewByTask />} />
+          <Route exact path='/add-resource/:taskId' element={<ResourceAdd />} />
           <Route exact path='/update-resource/:resourceId' element={<ResourceUpdate />} />
 
         </Routes>

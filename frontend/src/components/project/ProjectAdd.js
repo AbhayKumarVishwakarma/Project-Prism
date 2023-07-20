@@ -64,9 +64,9 @@ const ProjectAdd = () => {
         <label> Status: <input type="text" name="status" value={formData.status} onChange={handleInputChange} required /> </label>
         <label> Start Date: <input type="text" name="start_date" value={formData.start_date} onChange={handleInputChange} required /> </label>
         <label> End Date: <input type='text' name='end_date' value={formData.end_date} onChange={handleInputChange} required /> </label>
-        <label> ID: <input type='number' name='manager_id' value={formData.manager_id} onChange={handleInputChange} required /> </label>
+        <label> manager ID: <input type='number' name='manager_id' value={formData.manager_id} onChange={handleInputChange} required /> </label>
 
-        <button type="submit">Add Portfolio Manager</button>
+        <button type="submit">Add Project</button>
       </form>
     </div>
   );
