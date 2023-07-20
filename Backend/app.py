@@ -215,13 +215,15 @@ def view_taskById(task_id):
 
 @app.route('/task/project/<int:project_id>', methods=['GET'])
 def view_taskByProjectId(project_id):
-    task = db.task.find_one({'project_id': project_id})
+    tasks = list(db.task.find({'project_id': project_id}))
 
-    if task is None:
-        return jsonify({f'message': f'Not find any task with project id: {project_id}!'}), 404
+    if len(tasks) == 0:
+        return jsonify({f'message': f'Not find any task with project id: {project_id}'}), 404
 
-    task['_id'] = str(task['_id'])
-    return jsonify(task)
+    for task in tasks:
+        task['_id'] = str(task['_id'])
+
+    return jsonify(tasks)
 
 
 # ---- Resource ----
@@ -292,13 +294,15 @@ def view_resourceById(resource_id):
 
 @app.route('/resource/task/<int:task_id>', methods=['GET'])
 def view_resourceByTaskId(task_id):
-    resource = db.resource.find_one({'task_id': task_id})
+    resources = list(db.resource.find({'task_id': task_id}))
 
-    if resource is None:
-        return jsonify({f'message': f'Not find any resource with task id: {task_id}!'}), 404
+    if len(resources) == 0:
+        return jsonify({'message': 'Not find any resource!'}), 404
 
-    resource['_id'] = str(resource['_id'])
-    return jsonify(resource)
+    for resource in resources:
+        resource['_id'] = str(resource['_id'])
+
+    return jsonify(resources)
 
 
 if __name__ == '__main__':
