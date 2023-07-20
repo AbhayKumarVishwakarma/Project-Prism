@@ -1,9 +1,11 @@
 from flask import Flask, jsonify, request
 from pymongo import MongoClient
+from flask_cors import CORS
 
 app = Flask(__name__)
+CORS(app)
 
-mongo_uri = ''
+mongo_uri = 'mongodb+srv://root:root@cluster0.tktlftp.mongodb.net/?retryWrites=true&w=majority'
 
 client = MongoClient(mongo_uri)
 db = client.Mongo
@@ -19,7 +21,7 @@ def create_portfolio_manager():
     data = request.get_json()
 
     if 'manager_id' not in data or 'name' not in data or 'email' not in data or 'status' not in data or \
-            'role' not in data or 'bio' not in data or 'strDate' not in data:
+            'role' not in data or 'bio' not in data or 'start_date' not in data:
         return jsonify({'message': 'Error, Invalid data'}), 400
 
     db.manager.insert_one(data)
@@ -58,13 +60,14 @@ def update_portfolio_manager(manager_id):
         return jsonify({'message': f'Not find any manager with id: {manager_id}!'}), 404
 
     data = request.get_json()
-    if 'password' in data: manager['password'] = data['password']
-    if 'status' in data: manager['status'] = data['status']
-    if 'role' in data: manager['role'] = data['role']
-    if 'bio' in data: manager['bio'] = data['bio']
+    updated_data = {}
+    if 'password' in data: updated_data['password'] = data['password']
+    if 'status' in data: updated_data['status'] = data['status']
+    if 'role' in data: updated_data['role'] = data['role']
+    if 'bio' in data: updated_data['bio'] = data['bio']
 
-    db.manager.delete_one({'manager_id': manager_id})
-    db.manager.insert_one(manager)
+    if updated_data:
+        db.manager.update_one({'manager_id': manager_id}, {'$set': updated_data})
 
     return jsonify({'message': f'Manager with id: {manager_id} is updated!'})
 
@@ -101,12 +104,13 @@ def update_project(project_id):
         return jsonify({'message': f'Not find any project with id: {project_id}!'}), 404
 
     data = request.get_json()
-    if 'manager_id' in data: project['manager_id'] = data['manager_id']
-    if 'status' in data: project['status'] = data['status']
-    if 'end_date' in data: project['end_date'] = data['end_date']
+    updated_data = {}
+    if 'manager_id' in data: updated_data['manager_id'] = data['manager_id']
+    if 'status' in data: updated_data['status'] = data['status']
+    if 'end_date' in data: updated_data['end_date'] = data['end_date']
 
-    db.project.delete_one({'project_id': project_id})
-    db.project.insert_one(project)
+    if updated_data:
+        db.project.update_one({'project_id': project_id}, {'$set': updated_data})
 
     return jsonify({'message': f'Project with id: {project_id} is updated!'})
 
@@ -148,13 +152,15 @@ def view_project(project_id):
 
 # ---- Task ----
 @app.route('/task/project/<int:project_id>', methods=['POST'])
-def create_task():
+def create_task(project_id):
     data = request.get_json()
 
-    if 'task_id' not in data or 'task_name' not in data or 'status' not in data or 'person_name' not in data \
-            or 'project_id' not in data:
+    if 'task_id' not in data or 'task_name' not in data or 'status' not in data or 'employee_name' not in data:
         return jsonify({'message': 'Error, Invalid data'}), 400
 
+    data['project_id'] = project_id
+
+    # print(data)
     db.task.insert_one(data)
     return jsonify({'message': 'New task created successfully!'})
 
@@ -167,10 +173,7 @@ def update_task(task_id):
         return jsonify({'message': f'Not find any task with id: {task_id}!'}), 404
 
     data = request.get_json()
-    if 'status' in data: task['status'] = data['status']
-
-    db.project.delete_one({'task_id': task_id})
-    db.project.insert_one(task)
+    db.task.update_one({'task_id': task_id}, {'$set': {'status': data['status']}})
 
     return jsonify({'message': f'Task with id: {task_id} is updated!'})
 
@@ -223,12 +226,13 @@ def view_taskByProjectId(project_id):
 
 # ---- Resource ----
 @app.route('/resource/task/<int:task_id>', methods=['POST'])
-def create_resource():
+def create_resource(task_id):
     data = request.get_json()
 
-    if 'resource_id' not in data or 'resource_name' not in data or 'description' not in data or 'task_id' not in data:
+    if 'resource_id' not in data or 'resource_name' not in data or 'description' not in data:
         return jsonify({'message': 'Error, Invalid data'}), 400
 
+    data['task_id'] = task_id
     db.resource.insert_one(data)
     return jsonify({'message': 'New resource created successfully!'})
 
@@ -241,11 +245,12 @@ def update_resource(resource_id):
         return jsonify({'message': f'Not find any resource with id: {resource}!'}), 404
 
     data = request.get_json()
-    if 'resource_name' in data: resource['resource_name'] = data['resource_name']
-    if 'description' in data: resource['description'] = data['description']
+    updated_data = {}
+    if 'resource_name' in data: updated_data['resource_name'] = data['resource_name']
+    if 'description' in data: updated_data['description'] = data['description']
 
-    db.resource.delete_one({'resource_id': resource_id})
-    db.resource.insert_one(resource)
+    if updated_data:
+        db.resource.update_one({'resource_id': resource_id}, {'$set': updated_data})
 
     return jsonify({'message': f'Resource with id: {resource_id} is updated!'})
 

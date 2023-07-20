@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { Link } from 'react-router-dom'; // For routing
+import { Link } from 'react-router-dom';
 
 const PortfolioManagerView = () => {
     const [managers, setManagers] = useState([]);

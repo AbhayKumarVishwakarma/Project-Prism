@@ -35,7 +35,7 @@ const PortfolioManagerAdd = () => {
 
       if (response.ok) {
         setFormData({
-          manager_id: '',
+          manager_id: 0,
           name: '',
           email: '',
           status: '',
@@ -56,17 +56,17 @@ const PortfolioManagerAdd = () => {
   return (
     <div>
       <h2>Add Portfolio Manager</h2>
-      <form onSubmit={handleFormSubmit} style={{display: 'flex', flexDirection: 'column'}}>
-        
+      <form onSubmit={handleFormSubmit} style={{ display: 'flex', flexDirection: 'column' }}>
+
         <label> ID: <input type='number' name='manager_id' value={formData.manager_id} onChange={handleInputChange} required /> </label>
-        <label> Name: <input type="text" name="name" value={formData.name} onChange={handleInputChange} required/> </label>
-        <label> Email: <input type="email" name="email" value={formData.email} onChange={handleInputChange} required/> </label>
-        <label> Password: <input type="password" name="password" value={formData.password} onChange={handleInputChange} required/> </label>
-        <label> Status: <input type="text" name="status" value={formData.status} onChange={handleInputChange} required/> </label>
-        <label> Role: <input type="text" name="role" value={formData.role} onChange={handleInputChange} required/> </label>
-        <label> Bio: <input type="text" name="bio" value={formData.bio} onChange={handleInputChange} required/> </label>
-        <label> Start Date: <input type="text" name="start_date" value={formData.start_date} onChange={handleInputChange} required/> </label>
-        
+        <label> Name: <input type="text" name="name" value={formData.name} onChange={handleInputChange} required /> </label>
+        <label> Email: <input type="email" name="email" value={formData.email} onChange={handleInputChange} required /> </label>
+        <label> Password: <input type="password" name="password" value={formData.password} onChange={handleInputChange} required /> </label>
+        <label> Status: <input type="text" name="status" value={formData.status} onChange={handleInputChange} required /> </label>
+        <label> Role: <input type="text" name="role" value={formData.role} onChange={handleInputChange} required /> </label>
+        <label> Bio: <input type="text" name="bio" value={formData.bio} onChange={handleInputChange} required /> </label>
+        <label> Start Date: <input type="text" name="start_date" value={formData.start_date} onChange={handleInputChange} required /> </label>
+
         <button type="submit">Add Portfolio Manager</button>
       </form>
     </div>
