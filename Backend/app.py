@@ -25,7 +25,7 @@ def create_portfolio_manager():
         return jsonify({'message': 'Error, Invalid data'}), 400
 
     db.manager.insert_one(data)
-    return jsonify({'message': 'New manager created successfully!'})
+    return jsonify([{'message': 'New manager created successfully!'}])
 
 
 @app.route('/portfolio-managers', methods=['GET'])
@@ -33,7 +33,7 @@ def view_all_portfolio_managers():
     managers = list(db.manager.find({}))
 
     if len(managers) == 0:
-        return jsonify({'message': 'Not find any manager!'}), 404
+        return jsonify([{'message': 'Not find any manager!'}]), 404
 
     for manager in managers:
         manager['_id'] = str(manager['_id'])
@@ -46,7 +46,7 @@ def view_portfolio_manager(manager_id):
     manager = db.manager.find_one({'manager_id': manager_id})
 
     if manager is None:
-        return jsonify({f'message': f'Not find any manager with id: {manager_id}!'}), 404
+        return jsonify([{f'message': f'Not find any manager with id: {manager_id}!'}]), 404
 
     manager['_id'] = str(manager['_id'])
     return jsonify(manager)
@@ -57,7 +57,7 @@ def update_portfolio_manager(manager_id):
     manager = db.manager.find_one({'manager_id': manager_id})
 
     if manager is None:
-        return jsonify({'message': f'Not find any manager with id: {manager_id}!'}), 404
+        return jsonify([{'message': f'Not find any manager with id: {manager_id}!'}]), 404
 
     data = request.get_json()
     updated_data = {}
@@ -69,7 +69,7 @@ def update_portfolio_manager(manager_id):
     if updated_data:
         db.manager.update_one({'manager_id': manager_id}, {'$set': updated_data})
 
-    return jsonify({'message': f'Manager with id: {manager_id} is updated!'})
+    return jsonify([{'message': f'Manager with id: {manager_id} is updated!'}])
 
 
 @app.route('/portfolio-manager/<int:manager_id>', methods=['DELETE'])
@@ -77,7 +77,7 @@ def delete_portfolio_manager(manager_id):
     manager = db.manager.find_one({'manager_id': manager_id})
 
     if manager is None:
-        return jsonify({'message': f'Not find any manager with id: {manager_id}!'}), 404
+        return jsonify([{'message': f'Not find any manager with id: {manager_id}!'}]), 404
 
     db.manager.delete_one({'manager_id': manager_id})
     return jsonify({'message': f'Manager with id: {manager_id} is deleted!'})
@@ -93,7 +93,7 @@ def create_project():
         return jsonify({'message': 'Error, Invalid data'}), 400
 
     db.project.insert_one(data)
-    return jsonify({'message': 'New project created successfully!'})
+    return jsonify([{'message': 'New project created successfully!'}])
 
 
 @app.route('/project/<int:project_id>', methods=['PUT'])
@@ -101,7 +101,7 @@ def update_project(project_id):
     project = db.project.find_one({'project_id': project_id})
 
     if project is None:
-        return jsonify({'message': f'Not find any project with id: {project_id}!'}), 404
+        return jsonify([{'message': f'Not find any project with id: {project_id}!'}]), 404
 
     data = request.get_json()
     updated_data = {}
@@ -112,7 +112,7 @@ def update_project(project_id):
     if updated_data:
         db.project.update_one({'project_id': project_id}, {'$set': updated_data})
 
-    return jsonify({'message': f'Project with id: {project_id} is updated!'})
+    return jsonify([{'message': f'Project with id: {project_id} is updated!'}])
 
 
 @app.route('/project/<int:project_id>', methods=['DELETE'])
@@ -120,10 +120,10 @@ def delete_project(project_id):
     project = db.project.find_one({'project_id': project_id})
 
     if project is None:
-        return jsonify({'message': f'Not find any project with id: {project_id}!'}), 404
+        return jsonify([{'message': f'Not find any project with id: {project_id}!'}]), 404
 
     db.project.delete_one({'project_id': project_id})
-    return jsonify({'message': f'Project with id: {project_id} is deleted!'})
+    return jsonify([{'message': f'Project with id: {project_id} is deleted!'}])
 
 
 @app.route('/projects', methods=['GET'])
@@ -131,7 +131,7 @@ def view_all_project():
     projects = list(db.project.find({}))
 
     if len(projects) == 0:
-        return jsonify({'message': 'Not find any project!'}), 404
+        return jsonify([{'message': 'Not find any project!'}]), 404
 
     for project in projects:
         project['_id'] = str(project['_id'])
@@ -144,10 +144,23 @@ def view_project(project_id):
     project = db.project.find_one({'project_id': project_id})
 
     if project is None:
-        return jsonify({f'message': f'Not find any project with id: {project_id}!'}), 404
+        return jsonify([{f'message': f'Not find any project with id: {project_id}!'}]), 404
 
     project['_id'] = str(project['_id'])
     return jsonify(project)
+
+
+@app.route('/project/manager/<int:manager_id>', methods=['GET'])
+def view_projectByManagerId(manager_id):
+    projects = list(db.project.find({'manager_id': manager_id}))
+
+    if len(projects) == 0:
+        return jsonify([{'message': 'Not find any project!'}]), 404
+
+    for project in projects:
+        project['_id'] = str(project['_id'])
+
+    return jsonify(projects)
 
 
 # ---- Task ----
@@ -156,13 +169,13 @@ def create_task(project_id):
     data = request.get_json()
 
     if 'task_id' not in data or 'task_name' not in data or 'status' not in data or 'employee_name' not in data:
-        return jsonify({'message': 'Error, Invalid data'}), 400
+        return jsonify([{'message': 'Error, Invalid data'}]), 400
 
     data['project_id'] = project_id
 
     # print(data)
     db.task.insert_one(data)
-    return jsonify({'message': 'New task created successfully!'})
+    return jsonify([{'message': 'New task created successfully!'}])
 
 
 @app.route('/task/<int:task_id>', methods=['PUT'])
@@ -170,12 +183,12 @@ def update_task(task_id):
     task = db.task.find_one({'task_id': task_id})
 
     if task is None:
-        return jsonify({'message': f'Not find any task with id: {task_id}!'}), 404
+        return jsonify([{'message': f'Not find any task with id: {task_id}!'}]), 404
 
     data = request.get_json()
     db.task.update_one({'task_id': task_id}, {'$set': {'status': data['status']}})
 
-    return jsonify({'message': f'Task with id: {task_id} is updated!'})
+    return jsonify([{'message': f'Task with id: {task_id} is updated!'}])
 
 
 @app.route('/task/<int:task_id>', methods=['DELETE'])
@@ -183,10 +196,10 @@ def delete_task(task_id):
     task = db.task.find_one({'task_id': task_id})
 
     if task is None:
-        return jsonify({'message': f'Not find any task with id: {task_id}!'}), 404
+        return jsonify([{'message': f'Not find any task with id: {task_id}!'}]), 404
 
     db.task.delete_one({'task_id': task_id})
-    return jsonify({'message': f'Task with id: {task_id} is deleted!'})
+    return jsonify([{'message': f'Task with id: {task_id} is deleted!'}])
 
 
 @app.route('/tasks', methods=['GET'])
@@ -194,7 +207,7 @@ def view_all_task():
     tasks = list(db.task.find({}))
 
     if len(tasks) == 0:
-        return jsonify({'message': 'Not find any task!'}), 404
+        return jsonify([{'message': 'Not find any task!'}]), 404
 
     for task in tasks:
         task['_id'] = str(task['_id'])
@@ -207,7 +220,7 @@ def view_taskById(task_id):
     task = db.task.find_one({'task_id': task_id})
 
     if task is None:
-        return jsonify({f'message': f'Not find any task with id: {task_id}!'}), 404
+        return jsonify([{f'message': f'Not find any task with id: {task_id}!'}]), 404
 
     task['_id'] = str(task['_id'])
     return jsonify(task)
@@ -218,7 +231,7 @@ def view_taskByProjectId(project_id):
     tasks = list(db.task.find({'project_id': project_id}))
 
     if len(tasks) == 0:
-        return jsonify({f'message': f'Not find any task with project id: {project_id}'}), 404
+        return jsonify([{f'message': f'Not find any task with project id: {project_id}'}]), 404
 
     for task in tasks:
         task['_id'] = str(task['_id'])
@@ -232,11 +245,11 @@ def create_resource(task_id):
     data = request.get_json()
 
     if 'resource_id' not in data or 'resource_name' not in data or 'description' not in data:
-        return jsonify({'message': 'Error, Invalid data'}), 400
+        return jsonify([{'message': 'Error, Invalid data'}]), 400
 
     data['task_id'] = task_id
     db.resource.insert_one(data)
-    return jsonify({'message': 'New resource created successfully!'})
+    return jsonify([{'message': 'New resource created successfully!'}])
 
 
 @app.route('/resource/<int:resource_id>', methods=['PUT'])
@@ -244,7 +257,7 @@ def update_resource(resource_id):
     resource = db.resource.find_one({'resource_id': resource_id})
 
     if resource is None:
-        return jsonify({'message': f'Not find any resource with id: {resource}!'}), 404
+        return jsonify([{'message': f'Not find any resource with id: {resource}!'}]), 404
 
     data = request.get_json()
     updated_data = {}
@@ -254,7 +267,7 @@ def update_resource(resource_id):
     if updated_data:
         db.resource.update_one({'resource_id': resource_id}, {'$set': updated_data})
 
-    return jsonify({'message': f'Resource with id: {resource_id} is updated!'})
+    return jsonify([{'message': f'Resource with id: {resource_id} is updated!'}])
 
 
 @app.route('/resource/<int:resource_id>', methods=['DELETE'])
@@ -262,10 +275,10 @@ def delete_resource(resource_id):
     resource = db.resource.find_one({'resource_id': resource_id})
 
     if resource is None:
-        return jsonify({'message': f'Not find any resource with id: {resource_id}!'}), 404
+        return jsonify([{'message': f'Not find any resource with id: {resource_id}!'}]), 404
 
     db.resource.delete_one({'resource_id': resource_id})
-    return jsonify({'message': f'Resource with id: {resource_id} is deleted!'})
+    return jsonify([{'message': f'Resource with id: {resource_id} is deleted!'}])
 
 
 @app.route('/resources', methods=['GET'])
@@ -273,7 +286,7 @@ def view_all_resource():
     resources = list(db.resource.find({}))
 
     if len(resources) == 0:
-        return jsonify({'message': 'Not find any resource!'}), 404
+        return jsonify([{'message': 'Not find any resource!'}]), 404
 
     for resource in resources:
         resource['_id'] = str(resource['_id'])
@@ -286,7 +299,7 @@ def view_resourceById(resource_id):
     resource = db.resource.find_one({'resource_id': resource_id})
 
     if resource is None:
-        return jsonify({f'message': f'Not find any resource with id: {resource_id}!'}), 404
+        return jsonify([{f'message': f'Not find any resource with id: {resource_id}!'}]), 404
 
     resource['_id'] = str(resource['_id'])
     return jsonify(resource)
@@ -297,7 +310,7 @@ def view_resourceByTaskId(task_id):
     resources = list(db.resource.find({'task_id': task_id}))
 
     if len(resources) == 0:
-        return jsonify({'message': 'Not find any resource!'}), 404
+        return jsonify([{'message': 'Not find any resource!'}]), 404
 
     for resource in resources:
         resource['_id'] = str(resource['_id'])
