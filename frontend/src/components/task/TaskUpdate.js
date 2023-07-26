@@ -1,7 +1,9 @@
 import React, { useState, useEffect } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
+import './Task.css'
 
 const TaskUpdate = () => {
+  const url = 'https://project-prism.onrender.com';
   const navigate = useNavigate();
   const { taskId } = useParams();
   const [formData, setFormData] = useState({
@@ -14,7 +16,7 @@ const TaskUpdate = () => {
 
   const fetchTask = async () => {
     try {
-      const response = await fetch(`http://127.0.0.1:5000/task/${taskId}`);
+      const response = await fetch(`${url}/task/${taskId}`);
       const data = await response.json();
       // console.log(data);
       setFormData(data)
@@ -36,7 +38,7 @@ const TaskUpdate = () => {
     event.preventDefault();
     // console.log(formData)
     try {
-      const response = await fetch(`http://127.0.0.1:5000/task/${taskId}`, {
+      const response = await fetch(`${url}/task/${taskId}`, {
         method: 'PUT',
         headers: {
           'Content-Type': 'application/json',
@@ -58,12 +60,17 @@ const TaskUpdate = () => {
 
   return (
     <div>
-      <h2>Update Task</h2>
-      <form onSubmit={handleFormSubmit} style={{ display: 'flex', flexDirection: 'column' }}>
+      <div className='task-head'>
+        <h2>Update Task</h2>
+      </div>
+      <form className='form-cont' onSubmit={handleFormSubmit}>
 
-        <label> Status: <input type="text" name="status" value={formData.status} onChange={handleInputChange} /> </label>
+        <div className="form-group">
+          <label for="exampleInputStatus">Status</label>
+          <input type="text" className="form-control" id="exampleInputStatus" name="status" value={formData.status} onChange={handleInputChange} required />
+        </div>
 
-        <button type="submit">Update Task</button>
+        <button type="submit" className="btn btn-primary">Update Task</button>
       </form>
     </div>
   )

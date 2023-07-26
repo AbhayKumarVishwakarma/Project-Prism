@@ -1,0 +1,97 @@
+.nav-cont{
+    height: 60px;
+    width: 100vw;
+    /* background-color: #f0fffa; */
+    background-color: #f0faff;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+.nav-cont-child{
+    margin: auto;
+    width: 60%;
+    height: 40px;
+    /* background-color: white; */
+    display: flex;
+    justify-content: space-evenly;
+    color: black;
+}
+
+
+/* home */
+
+.card__img{
+    /* height: 100vh; */
+    width: 100vw;
+}
+
+.card__img img {
+    /* height: 120px; */
+    /* width: 100%; */
+    /* height: 100%; */
+    height:100vh;
+    width: 100vw;
+    object-fit: cover;
+  }
+
+
+.manager-head{
+    display: flex;
+    justify-content: space-between;
+    padding: 10px;
+    align-items: center;
+    margin-bottom: 30px;
+}
+
+.create{
+    border: none;
+    border-radius: 3px;
+    background-color: #ff9a1f;
+    color: white;
+    padding: 7px 15px;
+}
+
+table {
+    border: 1px solid #ccc;
+    /* box-shadow: rgba(0, 0, 0, 0.4) 0px 2px 4px, rgba(0, 0, 0, 0.3) 0px 7px 13px -3px, rgba(0, 0, 0, 0.2) 0px -3px 0px inset; */
+    /* margin: 20px; */
+}
+
+.update{
+    border: none;
+    border-radius: 3px;
+    background-color: rgb(47, 150, 16);
+    color: white;
+    margin-left: 5px;
+}
+
+.delete{
+    border: none;
+    border-radius: 3px;
+    background-color: rgb(255, 0, 0);
+    color: white;
+    margin-left: 5px;
+}
+
+
+/* add, update manager */
+
+.form-cont{
+    width: 40%;
+    margin: auto;
+    padding: 25px;
+    border-radius: 7px;
+    box-shadow: rgba(0, 0, 0, 0.25) 0px 54px 55px, rgba(0, 0, 0, 0.12) 0px -12px 30px, rgba(0, 0, 0, 0.12) 0px 4px 6px, rgba(0, 0, 0, 0.17) 0px 12px 13px, rgba(0, 0, 0, 0.09) 0px -3px 5px;;
+}
+
+.form-group{
+    margin: 5px 0px 7px 0px;
+}
+
+.btn{
+    margin-top: 18px;
+}
+
+.form-control{
+    color: rgb(140, 131, 131);
+}

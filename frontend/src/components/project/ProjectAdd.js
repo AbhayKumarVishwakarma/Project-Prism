@@ -1,7 +1,9 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
+import './Project.css'
 
 const ProjectAdd = () => {
+    const url = 'https://project-prism.onrender.com';
     const navigate = useNavigate();
     const [formData, setFormData] = useState({
         project_id: 0,
@@ -12,8 +14,8 @@ const ProjectAdd = () => {
         manager_id: 0,
     })
 
-    const handleInputChange = (event)=> {
-        const {name, value} = event.target;
+    const handleInputChange = (event) => {
+        const { name, value } = event.target;
         setFormData((prevFormData) => ({
             ...prevFormData,
             [name]: value,
@@ -26,14 +28,14 @@ const ProjectAdd = () => {
         // console.log(formData)
         event.preventDefault();
         try {
-            const response = await fetch('http://127.0.0.1:5000/project', {
+            const response = await fetch(`${url}/project`, {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',
                 },
                 body: JSON.stringify(formData)
             });
-            if(response.ok){
+            if (response.ok) {
                 setFormData({
                     project_id: 0,
                     project_name: '',
@@ -45,7 +47,7 @@ const ProjectAdd = () => {
                 alert('New Project added successfully!')
                 navigate('/view-projects')
             }
-            else{
+            else {
                 alert('Error adding Project. Please try again.')
             }
 
@@ -54,22 +56,42 @@ const ProjectAdd = () => {
         }
     }
 
-  return (
-    <div>
-      <h2>Add Project</h2>
-      <form onSubmit={handleFormSubmit} style={{ display: 'flex', flexDirection: 'column' }}>
+    return (
+        <div>
+            <div className='manager-head'>
+                <h2>Add Project</h2>
+            </div>
+            <form className='form-cont' onSubmit={handleFormSubmit} style={{ display: 'flex', flexDirection: 'column' }}>
 
-        <label> ID: <input type='number' name='project_id' value={formData.project_id} onChange={handleInputChange} required /> </label>
-        <label> Name: <input type="text" name="project_name" value={formData.project_name} onChange={handleInputChange} required /> </label>
-        <label> Status: <input type="text" name="status" value={formData.status} onChange={handleInputChange} required /> </label>
-        <label> Start Date: <input type="text" name="start_date" value={formData.start_date} onChange={handleInputChange} required /> </label>
-        <label> End Date: <input type='text' name='end_date' value={formData.end_date} onChange={handleInputChange} required /> </label>
-        <label> manager ID: <input type='number' name='manager_id' value={formData.manager_id} onChange={handleInputChange} required /> </label>
+                <div className="form-group">
+                    <label for="exampleInputId">ID</label>
+                    <input type='number' className="form-control" id="exampleInputId" name='project_id' value={formData.project_id} onChange={handleInputChange} required />
+                </div>
+                <div className="form-group">
+                    <label for="exampleInputName">Name</label>
+                    <input type="text" className="form-control" id="exampleInputName" name="project_name" value={formData.project_name} onChange={handleInputChange} required />
+                </div>
+                <div className="form-group">
+                    <label for="exampleInputStatus">Status</label>
+                    <input type="text" className="form-control" id="exampleInputStatus" name="status" value={formData.status} onChange={handleInputChange} required />
+                </div>
+                <div className="form-group">
+                    <label for="exampleInputStartDate">Start date</label>
+                    <input type="date" className="form-control" id="exampleInputStartDate" name="start_date" value={formData.start_date} onChange={handleInputChange} required />
+                </div>
+                <div className="form-group">
+                    <label for="exampleInputEndDate">End date</label>
+                    <input type="date" className="form-control" id="exampleInputEndDate" name="end_date" value={formData.end_date} onChange={handleInputChange} required />
+                </div>
+                <div className="form-group">
+                    <label for="exampleInputId">Manager ID</label>
+                    <input type='number' className="form-control" id="exampleInputId" name='manager_id' value={formData.manager_id} onChange={handleInputChange} required />
+                </div>
 
-        <button type="submit">Add Project</button>
-      </form>
-    </div>
-  );
+                <button type="submit" className="btn btn-primary">Add Project</button>
+            </form>
+        </div>
+    );
 }
 
 export default ProjectAdd

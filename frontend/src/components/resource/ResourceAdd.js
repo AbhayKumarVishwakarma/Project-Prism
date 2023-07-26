@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
 
 const ResourceAdd = () => {
+  const url = 'https://project-prism.onrender.com';
   const navigate = useNavigate();
   const { taskId } = useParams();
   const [formData, setFormData] = useState({
@@ -21,10 +22,10 @@ const ResourceAdd = () => {
   const handleFormSubmit = async (event) => {
     formData.resource_id = Number(formData.resource_id)
     formData.task_id = Number(taskId)
-    
+
     event.preventDefault();
     try {
-      const response = await fetch(`http://127.0.0.1:5000/resource/task/${taskId}`, {
+      const response = await fetch(`${url}/resource/task/${taskId}`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -52,14 +53,25 @@ const ResourceAdd = () => {
 
   return (
     <div>
-      <h2>Add Resource</h2>
-      <form onSubmit={handleFormSubmit} style={{ display: 'flex', flexDirection: 'column' }}>
+      <div className='task-head'>
+        <h2>Add Resource</h2>
+      </div>
+      <form className='form-cont' onSubmit={handleFormSubmit}>
 
-        <label> ID: <input type='number' name='resource_id' value={formData.resource_id} onChange={handleInputChange} required /> </label>
-        <label> Name: <input type="text" name="resource_name" value={formData.resource_name} onChange={handleInputChange} required /> </label>
-        <label> Description: <input type="text" name="description" value={formData.description} onChange={handleInputChange} required /> </label>
-        
-        <button type="submit">Add Resource</button>
+        <div className="form-group">
+          <label for="exampleInputId">ID</label>
+          <input type='number' className="form-control" id="exampleInputId" name='resource_id' value={formData.resource_id} onChange={handleInputChange} required />
+        </div>
+        <div className="form-group">
+          <label for="exampleInputName">Name</label>
+          <input type="text" className="form-control" id="exampleInputName" name="resource_name" value={formData.resource_name} onChange={handleInputChange} required />
+        </div>
+        <div className="form-group">
+          <label for="exampleInputDes">Description</label>
+          <input type="text" className="form-control" id="exampleInputDes" name="description" value={formData.description} onChange={handleInputChange} required />
+        </div>
+
+        <button type="submit" className="btn btn-primary">Add Resource</button>
       </form>
     </div>
   );

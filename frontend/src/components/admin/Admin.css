@@ -1,0 +1,153 @@
+/* NavigationBar */
+
+.navbar {
+    background-color: #0254fa;
+    color: #fff;
+    display: flex;
+    align-items: center;
+    height: 60px;
+    padding: 0 20px;
+}
+
+.navbar-left {
+    flex: 1;
+}
+
+.company-name {
+    font-size: 24px;
+    font-weight: bold;
+}
+
+.navbar-middle {
+    flex: 2;
+    display: flex;
+    justify-content: center;
+}
+
+.navbar-search {
+    padding: 8px 12px;
+    border: none;
+    border-radius: 5px;
+    font-size: 16px;
+    width: 70%;
+}
+
+.navbar-right {
+    flex: 1;
+    text-align: right;
+}
+
+.admin-name {
+    font-size: 18px;
+    font-weight: bold;
+}
+
+
+
+/* AdminHome */
+
+.admin-home {
+    display: flex;
+}
+
+
+/* Side bar */
+
+.sidebar {
+    width: 200px;
+    background-color: #000e29;
+    color: #fff;
+    padding-top: 20px;
+    display: flex;
+    flex-direction: column;
+    /* min-height: 653px; */
+    min-height: 93vh;
+}
+
+.sidebar div {
+    height: 50px;
+    display: flex;
+    justify-content: left;
+    align-items: center;
+    cursor: pointer;
+}
+
+.sidebar div h5 {
+    margin-left: 20px;
+    color: #fff;
+    text-decoration: none;
+}
+
+.sidebar div:hover {
+    background-color: #2980b9;
+}
+
+
+/* main context */
+
+.main-content {
+    flex: 1;
+    padding: 20px;
+    /* background-color: red; */
+    height: auto;
+}
+
+/* deshboard */
+
+/* .cont-div{
+    display: 'flex'; 
+    flex-direction: 'column'; 
+    border: 1px solid red; 
+    padding: 10px;
+} */
+
+/* Styles for the 'cont' container with display grid */
+.cont {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    /* Two columns with equal width */
+    gap: 20px;
+    /* Adjust the gap between columns if needed */
+}
+
+/* Styles for 'cont-div' elements */
+.cont-div {
+    display: flex;
+    border: 1px solid #ccc;
+    padding: 10px;
+    height: 180px;
+    /* color: white; */
+    /* width: 70%; */
+}
+
+/* Styles for the 'top' div */
+.top {
+    width: 60%;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    /* align-items: ; */
+    /* text-align: end; */
+    /* border: 1px solid red; */
+}
+
+/* Styles for the 'bottom' div */
+.bottom {
+    width: 40%;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-end;
+    /* align-items: flex-end;  */
+    /* border: 1px solid green; */
+}
+
+/* Additional styles for the h2 and h5 elements */
+h1{
+    margin-top: 30px;
+    margin-left: 20px;
+    /* margin: 40px 0px, 0px, 26px; */
+}
+h5 {
+    margin-top: 5px;
+    /* margin-left: 20px; */
+}

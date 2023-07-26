@@ -1,7 +1,9 @@
 import React, { useState, useEffect } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
+import './PortfolioManager.css'
 
 const PortfolioManagerUpdate = () => {
+  const url = 'https://project-prism.onrender.com';
   const navigate = useNavigate();
   const { managerId } = useParams();
   const [formData, setFormData] = useState({
@@ -17,7 +19,7 @@ const PortfolioManagerUpdate = () => {
 
   const fetchPortfolioManager = async () => {
     try {
-      const response = await fetch(`http://127.0.0.1:5000/portfolio-manager/${managerId}`);
+      const response = await fetch(`${url}/portfolio-manager/${managerId}`);
       const data = await response.json();
       setFormData(data);
     } catch (error) {
@@ -35,9 +37,9 @@ const PortfolioManagerUpdate = () => {
 
   const handleFormSubmit = async (event) => {
     event.preventDefault();
-    console.log(formData)
+    // console.log(formData)
     try {
-      const response = await fetch(`http://127.0.0.1:5000/portfolio-manager/${managerId}`, {
+      const response = await fetch(`${url}/portfolio-manager/${managerId}`, {
         method: 'PUT',
         headers: {
           'Content-Type': 'application/json',
@@ -58,15 +60,28 @@ const PortfolioManagerUpdate = () => {
 
   return (
     <div>
-      <h2>Update Portfolio Manager</h2>
-      <form onSubmit={handleFormSubmit}  style={{display: 'flex', flexDirection: 'column'}}>
-        
-        <label> Password: <input type="password" name="password" value={formData.password} onChange={handleInputChange} /> </label>
-        <label> Status: <input type="text" name="status" value={formData.status} onChange={handleInputChange} /> </label>
-        <label> Role: <input type="text" name="role" value={formData.role} onChange={handleInputChange} /> </label>
-        <label> Bio: <input type="text" name="bio" value={formData.bio} onChange={handleInputChange} /> </label>
+      <div className='manager-head'>
+        <h2>Update Portfolio Manager</h2>
+      </div>
 
-        <button type="submit">Update Portfolio Manager</button>
+      <form className='form-cont' onSubmit={handleFormSubmit}>
+        <div className="form-group">
+          <label for="exampleInputPassword">Password</label>
+          <input type="password" className="form-control" id="exampleInputPassword" name="password" value={formData.password} onChange={handleInputChange} required />
+        </div>
+        <div className="form-group">
+          <label for="exampleInputStatus">Status</label>
+          <input type="text" className="form-control" id="exampleInputStatus" name="status" value={formData.status} onChange={handleInputChange} required />
+        </div>
+        <div className="form-group">
+          <label for="exampleInputRole">Role</label>
+          <input type="text" className="form-control" id="exampleInputRole" name="role" value={formData.role} onChange={handleInputChange} required />
+        </div>
+        <div className="form-group">
+          <label for="exampleInputBio">Bio</label>
+          <input type="text" className="form-control" id="exampleInputBio" name="bio" value={formData.bio} onChange={handleInputChange} required />
+        </div>
+        <button type="submit" className="btn btn-primary">Update Portfolio Manager</button>
       </form>
     </div>
   );

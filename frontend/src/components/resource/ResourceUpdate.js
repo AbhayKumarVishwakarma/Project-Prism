@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
 
 const ResourceUpdate = () => {
+  const url = 'https://project-prism.onrender.com';
   const navigate = useNavigate();
   const { resourceId } = useParams();
   const [formData, setFormData] = useState({
@@ -10,34 +11,34 @@ const ResourceUpdate = () => {
   })
 
   useEffect(() => {
-      fetchResource();
+    fetchResource();
   }, []);
 
   const fetchResource = async () => {
-      try {
-          const response = await fetch(`http://127.0.0.1:5000/resource/${resourceId}`);
-          const data = await response.json();
-          console.log(data);
-          setFormData(data)
-      }
-      catch (error) {
-          console.error('Error fetching Resources:', error);
-      }
+    try {
+      const response = await fetch(`${url}/resource/${resourceId}`);
+      const data = await response.json();
+      console.log(data);
+      setFormData(data)
+    }
+    catch (error) {
+      console.error('Error fetching Resources:', error);
+    }
   }
 
   const handleInputChange = (event) => {
-      const { name, value } = event.target;
-      setFormData((prevFormData) => ({
-          ...prevFormData,
-          [name]: value,
-      }))
+    const { name, value } = event.target;
+    setFormData((prevFormData) => ({
+      ...prevFormData,
+      [name]: value,
+    }))
   }
 
   const handleFormSubmit = async (event) => {
     event.preventDefault();
     console.log(formData)
     try {
-      const response = await fetch(`http://127.0.0.1:5000/resource/${resourceId}`, {
+      const response = await fetch(`${url}/resource/${resourceId}`, {
         method: 'PUT',
         headers: {
           'Content-Type': 'application/json',
@@ -60,13 +61,21 @@ const ResourceUpdate = () => {
 
   return (
     <div>
-      <h2>Update Resource</h2>
-      <form onSubmit={handleFormSubmit} style={{ display: 'flex', flexDirection: 'column' }}>
+      <div className='task-head'>
+        <h2>Update Resource</h2>
+      </div>
+      <form className='form-cont' onSubmit={handleFormSubmit}>
 
-        <label> Name: <input type="text" name="resource_name" value={formData.resource_name} onChange={handleInputChange} /> </label>
-        <label> Description: <input type="text" name="description" value={formData.description} onChange={handleInputChange} /> </label>
+      <div className="form-group">
+          <label for="exampleInputName">Name</label>
+          <input type="text" className="form-control" id="exampleInputName" name="resource_name" value={formData.resource_name} onChange={handleInputChange} required />
+        </div>
+        <div className="form-group">
+          <label for="exampleInputDes">Description</label>
+          <input type="text" className="form-control" id="exampleInputDes" name="description" value={formData.description} onChange={handleInputChange} required />
+        </div>
 
-        <button type="submit">Update Resource</button>
+        <button type="submit" className="btn btn-primary">Update Resource</button>
       </form>
     </div>
   )

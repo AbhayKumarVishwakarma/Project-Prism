@@ -1,7 +1,9 @@
 import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
+import './PortfolioManager.css'
 
 const PortfolioManagerView = () => {
+    const url = 'https://project-prism.onrender.com';
     const [managers, setManagers] = useState([]);
 
     useEffect(() => {
@@ -10,9 +12,9 @@ const PortfolioManagerView = () => {
 
     const fetchPortfolioManagers = async () => {
         try {
-            const response = await fetch('http://127.0.0.1:5000/portfolio-managers');
+            const response = await fetch(`${url}/portfolio-managers`);
             const data = await response.json();
-            console.log(data)
+            // console.log(data)
             setManagers(data);
         } catch (error) {
             console.error('Error fetching Portfolio Managers:', error);
@@ -21,7 +23,7 @@ const PortfolioManagerView = () => {
 
     const handleDeleteManager = async (managerId) => {
         try {
-            const response = await fetch(`http://127.0.0.1:5000/portfolio-manager/${managerId}`, {
+            const response = await fetch(`${url}/portfolio-manager/${managerId}`, {
                 method: 'DELETE',
             });
 
@@ -40,22 +42,38 @@ const PortfolioManagerView = () => {
 
     return (
         <div>
-            <h2>View Portfolio Managers</h2>
-            <Link to="/add-portfolio-manager"> <button>Create Portfolio Manager</button> </Link>
-            <div>
-                {managers.map((manager) => (
-                    <div key={manager.manager_id} style={{border: '1px solid black', margin: '20px', padding: '10px'}}>
-                        <h3>Name: {manager['name']}</h3>
-                        <p>Email: {manager.email}</p>
-                        <p>Status: {manager.status}</p>
-                        <p>Role: {manager.role}</p>
-                        <p>Bio: {manager.bio}</p>
-                        <p>Start Date: {manager.start_date}</p>
-                        <Link to={`/update-portfolio-manager/${manager.manager_id}`}> <button>Update</button> </Link>
-                        <button onClick={() => handleDeleteManager(manager.manager_id)}> Delete </button>
-                    </div>
-                ))}
+            <div className='manager-head'>
+                <h2>View Portfolio Managers</h2>
+                <Link to="/add-portfolio-manager"> <button className='create'>Create Portfolio Manager</button> </Link>
             </div>
+
+            <table className="table table-hover">
+                    <thead>
+                        <tr>
+                            <th scope="col">Name</th>
+                            <th scope="col">Email</th>
+                            <th scope="col">Status</th>
+                            <th scope="col">Role</th>
+                            <th scope="col">Bio</th>
+                            <th scope="col">Start Date</th>
+                            <th scope="col">Actions</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                    {managers.map((manager) => (
+                        <tr key={manager.manager_id}>
+                            <td>{manager.name}</td>
+                            <td>{manager.email}</td>
+                            <td>{manager.status}</td>
+                            <td>{manager.role}</td>
+                            <td>{manager.bio}</td>
+                            <td>{manager.start_date}</td>
+                            <td><Link to={`/update-portfolio-manager/${manager.manager_id}`}> <button className='update'>Update</button> </Link>
+                            <button className='delete' onClick={() => handleDeleteManager(manager.manager_id)}> Delete </button></td>
+                        </tr>
+                ))}
+                    </tbody>
+                </table>
         </div>
     );
 };

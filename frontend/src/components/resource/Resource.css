@@ -1,0 +1,65 @@
+.resource-head{
+    display: flex;
+    justify-content: space-between;
+    padding: 10px;
+    align-items: center;
+    margin-bottom: 30px;
+}
+
+.create{
+    border: none;
+    border-radius: 3px;
+    background-color: #ff9a1f;
+    color: white;
+    padding: 7px 15px;
+}
+
+table {
+    border: 1px solid #ccc;
+}
+
+.update{
+    border: none;
+    border-radius: 3px;
+    background-color: rgb(47, 150, 16);
+    color: white;
+    margin-left: 5px;
+}
+
+.delete{
+    border: none;
+    border-radius: 3px;
+    background-color: rgb(255, 0, 0);
+    color: white;
+    margin-left: 5px;
+}
+
+.project-task{
+    border: none;
+    border-radius: 3px;
+    background-color: rgb(148, 141, 141);
+    color: white;
+}
+
+/* add, update product */
+
+.form-cont{
+    width: 40%;
+    margin: auto;
+    padding: 25px;
+    border-radius: 7px;
+    box-shadow: rgba(0, 0, 0, 0.25) 0px 54px 55px, rgba(0, 0, 0, 0.12) 0px -12px 30px, rgba(0, 0, 0, 0.12) 0px 4px 6px, rgba(0, 0, 0, 0.17) 0px 12px 13px, rgba(0, 0, 0, 0.09) 0px -3px 5px;;
+}
+
+.form-group{
+    margin: 5px 0px 10px 0px;
+}
+
+.btn{
+    margin-top: 18px;
+}
+
+.form-control{
+    margin-bottom: 15px;
+    color: rgb(140, 131, 131);
+}
