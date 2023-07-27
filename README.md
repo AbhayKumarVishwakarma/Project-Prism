@@ -1,4 +1,4 @@
-# Project Pulse **- Portfolio Management Application**
+# Project Prism **- Portfolio Management Application**
 
 Project Prism is a user-friendly Portfolio Management Application that streamlines project and task management for portfolio managers. It offers full-stack web capabilities, allowing easy CRUD operations for project details and resources. Task management is independent for each project task, and resources can be efficiently allocated. The application features advanced project listing with filtering, sorting, and pagination. 
 
@@ -37,7 +37,7 @@ password:-admin
 
 # Entity Relationship Diagrams
 
-<img src="./frontend/src/components/image/ERD.png" alt="ERD" margin="0 auto" display="block" width="100%" height="auto" object-fit="contain">
+<img src="https://github.com/AbhayKumarVishwakarma/Project-Prism/blob/main/frontend/src/components/image/ERD.png" alt="ERD" margin="0 auto" display="block" width="100%" height="auto" object-fit="contain">
 <!-- ![ERD.png](https://drawsql.app/teams/ak-19/diagrams/er-diagram) -->
 
 # API endpoints required
