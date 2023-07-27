@@ -37,7 +37,8 @@ password:-admin
 
 # Entity Relationship Diagrams
 
-![ERD.png](https://drawsql.app/teams/ak-19/diagrams/er-diagram)
+<img src="./frontend/src/components/image/ERD.png" alt="ERD" margin="0 auto" display="block" width="100%" height="auto" object-fit="contain">
+<!-- ![ERD.png](https://drawsql.app/teams/ak-19/diagrams/er-diagram) -->
 
 # API endpoints required
 
